@@ -1,11 +1,10 @@
 SD2405 Real-Time Clock Library for Arduino
 =======================================================
-Copyright (c) 2015 Julien Gautier electronics@netgrowing.com / http://www.netgrowing.com
 
-This library is similar to popular DS1307RTC library and based on DFRobots Wiki example :
+This library is similar to popular DS1307RTC library and based on DFRobot Wiki example :
 http://www.dfrobot.com/wiki/index.php/SD2405_Real_time_clock_Module_(SKU:TOY0021)
 The SD2405RTC library is provided to demonstrate the Arduino Time library.
-It provides a simple interface to the SD2405AL and facilitate use of the DFRobots SD2405 RTC Module:
+It provides a simple interface to the SD2405AL and facilitate use of the DFRobot SD2405 RTC Module:
 DFRobots SD2405 RTC Module supplies the time data via I2C interface and the time format is configurable to be switched between 12 hours and 24 hours. However, another good feature is the time alarm function via interrupt event output.
 http://www.dfrobot.com/index.php?route=product/product&product_id=842
 
@@ -77,3 +76,7 @@ Write datetime data to the RTC chip in BDC format
 Example:
 
     RTC.write(tm);
+
+
+
+Copyright (c) 2015 Julien Gautier electronics@netgrowing.com / http://www.netgrowing.com
