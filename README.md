@@ -54,15 +54,15 @@ Example:
 
     setSyncProvider(RTC.get);
 
-### set() ###
+### set(time_t t) ###
 
 Convert a time_t element to tmElements_t and write it to the RTC
 
 Example:
 
-    setSyncProvider(RTC.get);
+    RTC.set(t);
 
-### read() ###
+### read(tmElements_t &tm) ###
 
 Aquire datetime data from the RTC chip in BCD format
 
@@ -70,7 +70,7 @@ Example:
 
     RTC.read(tm);
 
-### write() ###
+### write(tmElements_t &tm) ###
 
 Write datetime data to the RTC chip in BCD format
 
@@ -78,7 +78,7 @@ Example:
 
     RTC.write(tm);
 
-### readAlarm() ###
+### readAlarm(tmElements_t &al) ###
 
 Aquire alarm data from the RTC chip in BCD format
 
@@ -86,7 +86,7 @@ Example:
 
     RTC.readAlarm(al);
 
-### writeAlarm() ###
+### writeAlarm(tmElements_t &al, boolean periodic, boolean dateAlarm) ###
 
 Write alarm data to the RTC chip in BCD format
 
@@ -94,7 +94,7 @@ Example:
 
     RTC.writeAlarm(al, false, true); // Date Alarm in single event mode
 
-### readRegisters() ###
+### readRegisters(int nb) ###
 
 Print the RTC registers values in different formats (for debugging purpose)
 
