@@ -20,7 +20,8 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * 
- * 2015/01/30 - Initial release
+ * 2015/01/30 - Initial release: Real-Time Clock Functions
+ * 2015/02/03 - Alarm Interrupt Functions
  */
 
 #ifndef SD2405RTC_h
@@ -38,12 +39,17 @@ class SD2405RTC
     static void set(time_t t);
     static void read(tmElements_t &tm);
     static void write(tmElements_t &tm);
+    static void readAlarm(tmElements_t &al);
+    static void writeAlarm(tmElements_t &al, boolean periodic);
+    static void readRegisters(int nb);
 
   private:
     static uint8_t dec2bcd(uint8_t num);
     static uint8_t bcd2dec(uint8_t num);
-    static void writeTimeOn(void);
-    static void writeTimeOff(void);
+    static void enableWrite(void);
+    static void disableWrite(boolean alarm);
+    static void enableAlarm(void);
+    static void disableAlarm(void);
 };
 
 extern SD2405RTC RTC;
