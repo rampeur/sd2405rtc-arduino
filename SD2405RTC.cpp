@@ -83,7 +83,7 @@ void SD2405RTC::read( tmElements_t &tm)
   tm.Year = y2kYearToTm(date[6]); // We add 30 years to get time from 1970
 }
 
-// Write datetime data to the RTC chip in BDC format
+// Write datetime data to the RTC chip in BCD format
 void SD2405RTC::write(tmElements_t &tm)
 {
   enableWrite();
@@ -134,7 +134,7 @@ void SD2405RTC::readAlarm( tmElements_t &al)
   al.Year = y2kYearToTm(alarm[13]);
 }
 
-// Write alarm data to the RTC chip in BDC format
+// Write alarm data to the RTC chip in BCD format
 void SD2405RTC::writeAlarm(tmElements_t &al, boolean periodic, boolean dateAlarm)
 {
   enableWrite();
@@ -148,7 +148,7 @@ void SD2405RTC::writeAlarm(tmElements_t &al, boolean periodic, boolean dateAlarm
     Wire.write(dec2bcd(al.Day));   // 0BH Alarm Day
     Wire.write(dec2bcd(al.Month)); // 0CH Alarm Month
     Wire.write(dec2bcd(al.Year));  // 0DH Alarm Year
-    Wire.write(0b00000000);        // 0EH Disable Week Alarm ; Alarm will be on when reaching the defined date.
+    Wire.write(0b01110111);        // 0EH Disable Week Alarm ; Alarm will be on when reaching the defined date.
   } else {
     Wire.write(al.Wday);           // 0AH Alarm Week : This is not the name of the day, but the days the alarm will be enabled ; 0b01111111 : Each days of the week
     Wire.write(0b00000000);        // When the week alarm and the date alarm are
@@ -168,7 +168,7 @@ void SD2405RTC::writeAlarm(tmElements_t &al, boolean periodic, boolean dateAlarm
   al.Year = y2kYearToTm(al.Year);
 }
 
-// Aquire alarm data from the RTC chip in BCD format
+// Print the RTC registers values in differents formats (for debugging purpose).
 void SD2405RTC::readRegisters(int nb)
 {
   unsigned char data[nb];

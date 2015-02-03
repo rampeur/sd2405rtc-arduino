@@ -43,7 +43,7 @@ It also provides the basic alarm interrupt functions.
     tmElements_t tm;
     RTC.read(tm);
 
-A complete example program is included withthe library and can be accessed
+A complete example program is included with the library and can be accessed
 from the File->Examples->SD2405RTC menu.
 
 ### get() ###
@@ -72,12 +72,35 @@ Example:
 
 ### write() ###
 
-Write datetime data to the RTC chip in BDC format
+Write datetime data to the RTC chip in BCD format
 
 Example:
 
     RTC.write(tm);
 
+### readAlarm ###
+
+Aquire alarm data from the RTC chip in BCD format
+
+Example:
+
+    RTC.readAlarm(al);
+
+### writeAlarm ###
+
+Write alarm data to the RTC chip in BCD format
+
+Example:
+
+    RTC.writeAlarm(al, false, true); // Date Alarm in single event mode
+
+### readRegisters ###
+
+Print the RTC registers values in different formats (for debugging purpose)
+
+Example:
+
+    RTC.readRegisters(20); // RTC registers, Time Alarm registers and Control registers
 
 
 Copyright (c) 2015 Julien Gautier electronics@netgrowing.com / http://www.netgrowing.com
