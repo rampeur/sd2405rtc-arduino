@@ -33,6 +33,7 @@ Usage
 -----
 The library is instantiated as an object with methods provided to read
 and write datetime to RTC chip SD2405.
+It also provides the basic alarm interrupt functions.
 
     #include <Wire.h>
     #include <SD2405RTC.h>
