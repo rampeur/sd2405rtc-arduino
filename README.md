@@ -78,7 +78,7 @@ Example:
 
     RTC.write(tm);
 
-### readAlarm ###
+### readAlarm() ###
 
 Aquire alarm data from the RTC chip in BCD format
 
@@ -86,7 +86,7 @@ Example:
 
     RTC.readAlarm(al);
 
-### writeAlarm ###
+### writeAlarm() ###
 
 Write alarm data to the RTC chip in BCD format
 
@@ -94,7 +94,7 @@ Example:
 
     RTC.writeAlarm(al, false, true); // Date Alarm in single event mode
 
-### readRegisters ###
+### readRegisters() ###
 
 Print the RTC registers values in different formats (for debugging purpose)
 
