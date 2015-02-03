@@ -40,7 +40,7 @@ class SD2405RTC
     static void read(tmElements_t &tm);
     static void write(tmElements_t &tm);
     static void readAlarm(tmElements_t &al);
-    static void writeAlarm(tmElements_t &al, boolean periodic);
+    static void writeAlarm(tmElements_t &al, boolean periodic, boolean dateAlarm);
     static void readRegisters(int nb);
 
   private:

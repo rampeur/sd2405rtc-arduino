@@ -135,7 +135,7 @@ void SD2405RTC::readAlarm( tmElements_t &al)
 }
 
 // Write alarm data to the RTC chip in BDC format
-void SD2405RTC::writeAlarm(tmElements_t &al, boolean periodic)
+void SD2405RTC::writeAlarm(tmElements_t &al, boolean periodic, boolean dateAlarm)
 {
   enableWrite();
   Wire.beginTransmission(SD2405_ADDR);
@@ -143,12 +143,19 @@ void SD2405RTC::writeAlarm(tmElements_t &al, boolean periodic)
   Wire.write(dec2bcd(al.Second));  // 07H Alarm Second
   Wire.write(dec2bcd(al.Minute));  // 08H Alarm Minute
   Wire.write(dec2bcd(al.Hour));    // 09H Alarm Hour
-  //Wire.write(0b01111111);          // 0AH Alarm Week : This is not the name of the day, but the days the alarm will be enabled ; 01111111B : Each days of the week
-  Wire.write(al.Wday);          // 0AH Alarm Week : This is not the name of the day, but the days the alarm will be enabled ; 01111111B : Each days of the week
-  Wire.write(dec2bcd(al.Day));     // 0BH Alarm Day
-  Wire.write(dec2bcd(al.Month));   // 0CH Alarm Month
-  Wire.write(dec2bcd(al.Year));    // 0DH Alarm Year
-  Wire.write(0b00001111);          // 0EH Enable Alarm: Week / Hour / Minute / Second ; This is the week alarm: it will be enable on some days at a defined time ; 0EH=00001111B
+  if (dateAlarm) {
+    Wire.write(0b00000000);        // 0AH Alarm Week : This is not the name of the day, but the days the alarm will be enabled ;
+    Wire.write(dec2bcd(al.Day));   // 0BH Alarm Day
+    Wire.write(dec2bcd(al.Month)); // 0CH Alarm Month
+    Wire.write(dec2bcd(al.Year));  // 0DH Alarm Year
+    Wire.write(0b00000000);        // 0EH Disable Week Alarm ; Alarm will be on when reaching the defined date.
+  } else {
+    Wire.write(al.Wday);           // 0AH Alarm Week : This is not the name of the day, but the days the alarm will be enabled ; 0b01111111 : Each days of the week
+    Wire.write(0b00000000);        // When the week alarm and the date alarm are
+    Wire.write(0b00000000);        // both enable at the same time, only the date
+    Wire.write(0b00000000);        // alarm is valid and the week alarm is invalid.
+    Wire.write(0b00001111);        // 0EH Enable Alarm: Week / Hour / Minute / Second ; This is the week alarm: it will be enable on some days at a defined time ; 0EH=0b00001111
+  }
   Wire.write(0b10000100);          // 0FH WRTC3=1 0 INTAF=0 INTDF=0 0 WRTC2=1 0 RTCF=0
   if (periodic) {                  // If IM=0 this is a single event
     Wire.write(0b11010010);        // 10H WRTC1=1 IM=1 INTS1=0 INTS0=1 FOBAT=0 INTDE=0 INTAE=1 INTFE=0
@@ -245,7 +252,7 @@ void SD2405RTC::disableWrite(boolean alarm)
   if (alarm) {
     Wire.endTransmission();
     Wire.beginTransmission(SD2405_ADDR);
-    Wire.write(0x10);                // Set the address for writing as 10H
+    Wire.write(0x10);     // Set the address for writing as 10H
   }
   Wire.write(byte(0));    // Set WRTC1=0  
   Wire.endTransmission();
