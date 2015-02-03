@@ -13,6 +13,9 @@ get KEYWORD2
 set KEYWORD2
 read KEYWORD2
 write KEYWORD2
+readAlarm KEYWORD2
+writeAlarm KEYWORD2
+readRegisters KEYWORD2
 #######################################
 # Instances (KEYWORD2)
 #######################################
